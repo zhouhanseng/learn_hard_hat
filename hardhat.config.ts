@@ -1,14 +1,16 @@
-require("@nomiclabs/hardhat-waffle")
-require("@nomiclabs/hardhat-web3")
-const Web3  = require('web3')
-const fs = require('fs').promises
+import { task } from "hardhat/config"
+import("@nomiclabs/hardhat-waffle")
+import("@nomiclabs/hardhat-web3")
+import Web3 from 'web3'
+import { promises as fs } from 'fs'
+import { run } from "hardhat"
 
 const web3 = new Web3()
 
 task("test:prepare_data", "Generate data that required by test", async (taskArguments, hre) => {
   /* As hardhat allows to access its runtime environment variables, 
     we don't need to declare the self-generated accounts as a global variable */
-  console.log(hre.config.networks.hardhat.accounts.length)
+  console.log(hre.config.networks.hardhat.accounts)
   console.log(taskArguments, 123)
   console.log('process.env.REAL', process.env.REAL)
   await fs.writeFile('./temp/generated.js', `module.exports = { data: ${Math.random()} }`)
